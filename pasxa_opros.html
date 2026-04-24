@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Пасха: Голосование</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
+
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #F0D078;
+    --cream: #FAF6EE;
+    --deep: #1A1208;
+    --wine: #6B2737;
+    --ink: #2C1F0E;
+    --muted: #8B7355;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Crimson Pro', Georgia, serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ===== SCREEN ROUTER ===== */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* ===== LANDING ===== */
+  #landing {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--deep);
+    background-image: 
+      radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(107,39,55,0.15) 0%, transparent 50%);
+    padding: 2rem;
+    text-align: center;
+  }
+
+  #landing .ornament {
+    font-size: 2.5rem;
+    color: var(--gold);
+    letter-spacing: 0.5rem;
+    margin-bottom: 1.5rem;
+    animation: pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+  }
+
+  #landing h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    font-weight: 900;
+    color: var(--cream);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  #landing h1 span { color: var(--gold); }
+
+  #landing p {
+    color: var(--muted);
+    font-size: 1.2rem;
+    font-style: italic;
+    margin-bottom: 3rem;
+  }
+
+  .btn-group { display: flex; gap: 1.2rem; flex-wrap: wrap; justify-content: center; }
+
+  .btn {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 0.9rem 2.2rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+
+  .btn-gold {
+    background: var(--gold);
+    color: var(--deep);
+  }
+  .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--cream);
+    border: 1px solid rgba(201,168,76,0.5);
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ===== ADMIN PANEL ===== */
+  #admin {
+    min-height: 100vh;
+    background: var(--deep);
+    color: var(--cream);
+    padding: 1.5rem;
+  }
+
+  .admin-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .admin-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--gold);
+  }
+
+  .polls-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .poll-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 6px;
+    padding: 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .poll-card:hover { border-color: var(--gold); background: rgba(201,168,76,0.05); }
+  .poll-card.active-poll { border-color: var(--gold); background: rgba(201,168,76,0.1); }
+
+  .poll-card .stage {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+  }
+
+  .poll-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--cream);
+    margin-bottom: 0.8rem;
+    line-height: 1.3;
+  }
+
+  .poll-card .options-preview {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .btn-small {
+    font-size: 0.8rem;
+    padding: 0.4rem 1rem;
+    margin-top: 0.8rem;
+  }
+
+  /* ===== LIVE RESULTS ===== */
+  .live-panel {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 6px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .live-panel h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+    font-size: 1.1rem;
+  }
+
+  .result-row {
+    margin-bottom: 1rem;
+  }
+
+  .result-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    color: var(--cream);
+    margin-bottom: 0.3rem;
+  }
+
+  .result-bar-bg {
+    background: rgba(255,255,255,0.08);
+    border-radius: 2px;
+    height: 8px;
+    overflow: hidden;
+  }
+
+  .result-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--wine), var(--gold));
+    border-radius: 2px;
+    transition: width 0.5s ease;
+  }
+
+  .vote-count {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-top: 0.8rem;
+    font-style: italic;
+  }
+
+  /* QR section */
+  .qr-section {
+    text-align: center;
+    padding: 1.5rem;
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 6px;
+    background: white;
+  }
+
+  .qr-section canvas { display: block; margin: 0 auto; }
+
+  .qr-url {
+    font-size: 0.85rem;
+    color: #444;
+    margin-top: 0.5rem;
+    word-break: break-all;
+    font-family: monospace;
+  }
+
+  .status-badge {
+    display: inline-block;
+    padding: 0.2rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .status-open { background: rgba(50,200,100,0.2); color: #5de88c; border: 1px solid rgba(50,200,100,0.3); }
+  .status-closed { background: rgba(200,50,50,0.2); color: #e85d5d; border: 1px solid rgba(200,50,50,0.3); }
+
+  /* ===== VOTER PANEL ===== */
+  #voter {
+    min-height: 100vh;
+    background: var(--cream);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.5rem;
+  }
+
+  .voter-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2.5rem 2rem;
+    max-width: 480px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(26,18,8,0.12);
+    text-align: center;
+  }
+
+  .voter-card .egg-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .voter-card .poll-stage {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .voter-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--ink);
+    margin-bottom: 2rem;
+    line-height: 1.3;
+  }
+
+  .vote-option {
+    width: 100%;
+    background: var(--cream);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 0.8rem;
+    cursor: pointer;
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.05rem;
+    color: var(--ink);
+    text-align: left;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .vote-option:hover { border-color: var(--gold); background: #FFF8E8; }
+  .vote-option.selected { border-color: var(--gold); background: #FFF8E8; }
+  .vote-option .opt-letter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 50%;
+    background: var(--gold);
+    color: white;
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+
+  .vote-option.selected .opt-letter { background: var(--wine); }
+
+  .btn-vote {
+    width: 100%;
+    padding: 1rem;
+    margin-top: 1rem;
+    background: var(--wine);
+    color: white;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.03em;
+  }
+
+  .btn-vote:hover { background: #7d2f41; }
+  .btn-vote:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .voted-message {
+    padding: 2rem;
+    text-align: center;
+  }
+  .voted-message .big-check { font-size: 3rem; margin-bottom: 1rem; }
+  .voted-message h3 { font-family: 'Playfair Display', serif; color: var(--ink); font-size: 1.4rem; }
+  .voted-message p { color: var(--muted); font-style: italic; margin-top: 0.5rem; }
+
+  .no-poll {
+    padding: 2rem;
+    text-align: center;
+    color: var(--muted);
+    font-style: italic;
+    font-size: 1.1rem;
+  }
+
+  /* control row */
+  .ctrl-row { display: flex; gap: 0.8rem; flex-wrap: wrap; align-items: center; margin-top: 1rem; }
+
+  /* admin result live view */
+  #live-view { margin-top: 1.5rem; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  @media (max-width: 700px) { .grid-2 { grid-template-columns: 1fr; } .polls-grid { grid-template-columns: 1fr; } }
+
+  .back-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-family: 'Crimson Pro', serif;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0;
+  }
+  .back-btn:hover { color: var(--gold); }
+
+  /* toast */
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(2rem);
+    background: var(--deep);
+    color: var(--gold);
+    padding: 0.7rem 1.5rem;
+    border-radius: 30px;
+    border: 1px solid var(--gold);
+    font-size: 0.9rem;
+    opacity: 0;
+    transition: all 0.3s;
+    z-index: 100;
+    white-space: nowrap;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  .divider {
+    height: 1px;
+    background: rgba(201,168,76,0.2);
+    margin: 1.5rem 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- LANDING -->
+<div id="landing" class="screen active">
+  <div class="ornament">✦ ✦ ✦</div>
+  <h1>Пасха:<br><span>Традиция или Факт?</span></h1>
+  <p>Интерактивные дебаты · Система голосований</p>
+  <div class="btn-group">
+    <button class="btn btn-gold" onclick="showAdmin()">🎤 Панель ведущего</button>
+    <button class="btn btn-outline" onclick="showVoter()">📱 Проголосовать</button>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="admin" class="screen">
+  <div class="admin-header">
+    <div>
+      <div style="font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.2rem">Панель управления</div>
+      <h2>🎤 Ведущий · Голосования</h2>
+    </div>
+    <div style="display:flex;gap:0.8rem;align-items:center">
+      <span id="active-status" class="status-badge status-closed">Нет активного опроса</span>
+      <button class="btn btn-outline btn-small" onclick="showScreen('landing')">Выйти</button>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div>
+      <div style="color:var(--muted);font-size:0.8rem;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.8rem">Опросы по этапам</div>
+      <div class="polls-grid" id="polls-list"></div>
+    </div>
+
+    <div>
+      <div class="qr-section" id="qr-container">
+        <div style="color:#aaa;font-style:italic;padding:2rem 0">Выберите опрос, чтобы отобразить QR-код</div>
+      </div>
+      <div id="live-view"></div>
+    </div>
+  </div>
+</div>
+
+<!-- VOTER PANEL -->
+<div id="voter" class="screen">
+  <div style="position:absolute;top:1rem;left:1rem">
+    <button class="back-btn" onclick="showScreen('landing')">← Назад</button>
+  </div>
+  <div style="text-align:center;margin-bottom:1.5rem">
+    <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);margin-bottom:0.3rem">Пасхальные дебаты</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--wine)">Ваш голос важен</div>
+  </div>
+  <div class="voter-card" id="voter-card"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- QR lib -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<script>
+// ===== DATA =====
+const POLLS = [
+  {
+    id: 'p1',
+    stage: 'Этап 1 · Вступление',
+    question: 'Что для вас Пасха?',
+    options: [
+      'Семейный праздник, традиция, время любви и заботы о ближних',
+      'Событие Воскресения Иисуса Христа, изменившее историю'
+    ],
+    labels: ['А', 'Б']
+  },
+  {
+    id: 'p2',
+    stage: 'Этап 1 · После дебатов',
+    question: 'Чья позиция вам ближе после услышанного?',
+    options: [
+      '«Традиция» — праздник важен как культурная ценность',
+      '«Факт» — Воскресение — основа, без него нет смысла'
+    ],
+    labels: ['1', '2']
+  },
+  {
+    id: 'p3a',
+    stage: 'Этап 2 · Утверждение 1',
+    question: 'Иисус из Назарета — реальная историческая личность, упоминаемая у римских историков',
+    options: ['✅ Исторический факт', '❌ Миф / Недоказано'],
+    labels: ['А', 'Б']
+  },
+  {
+    id: 'p3b',
+    stage: 'Этап 2 · Утверждение 2',
+    question: 'Римские солдаты охраняли гробницы «опасных» преступников — стандартная практика',
+    options: ['✅ Исторический факт', '❌ Миф / Недоказано'],
+    labels: ['А', 'Б']
+  },
+  {
+    id: 'p3c',
+    stage: 'Этап 2 · Утверждение 3',
+    question: 'Ученики украли тело, чтобы создать легенду о воскресении',
+    options: ['✅ Исторический факт', '❌ Миф / Недоказано'],
+    labels: ['А', 'Б']
+  },
+  {
+    id: 'p4a',
+    stage: 'Этап 4 · Тезис 1',
+    question: 'Пасха важна только как культурное наследие и повод собрать семью',
+    options: ['👍 Согласен', '👎 Не согласен'],
+    labels: ['А', 'Б']
+  },
+  {
+    id: 'p4b',
+    stage: 'Этап 4 · Тезис 2',
+    question: 'Воскресение — буквальный исторический факт, без которого христианство бессмысленно',
+    options: ['👍 Согласен', '👎 Не согласен'],
+    labels: ['А', 'Б']
+  },
+  {
+    id: 'p4c',
+    stage: 'Этап 4 · Тезис 3',
+    question: 'Мне важен символ победы добра над злом, независимо от буквальности Воскресения',
+    options: ['👍 Согласен', '👎 Не согласен'],
+    labels: ['А', 'Б']
+  }
+];
+
+// ===== STATE =====
+let state = {
+  activePollId: null,
+  isOpen: false,
+  votes: {}, // pollId -> [count, count, ...]
+  voterVoted: {} // pollId -> true
+};
+
+// Init votes
+POLLS.forEach(p => { state.votes[p.id] = new Array(p.options.length).fill(0); });
+
+// ===== SCREENS =====
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function showAdmin() {
+  showScreen('admin');
+  renderPolls();
+  startLiveRefresh();
+}
+
+function showVoter() {
+  showScreen('voter');
+  renderVoter();
+  setInterval(renderVoter, 2000);
+}
+
+// ===== ADMIN =====
+function renderPolls() {
+  const list = document.getElementById('polls-list');
+  list.innerHTML = '';
+  POLLS.forEach(poll => {
+    const isActive = poll.id === state.activePollId;
+    const card = document.createElement('div');
+    card.className = 'poll-card' + (isActive ? ' active-poll' : '');
+    card.innerHTML = `
+      <div class="stage">${poll.stage}</div>
+      <h3>${poll.question}</h3>
+      <div class="options-preview">${poll.options.map((o,i)=>`${poll.labels[i]}) ${o.substring(0,50)}...`).join('<br>')}</div>
+      <div class="ctrl-row">
+        <button class="btn btn-gold btn-small" onclick="activatePoll('${poll.id}')">
+          ${isActive ? (state.isOpen ? '⏹ Закрыть' : '▶ Открыть') : '▶ Запустить'}
+        </button>
+        ${isActive ? `<button class="btn btn-outline btn-small" onclick="resetPoll('${poll.id}')">🔄 Сбросить</button>` : ''}
+        <span style="color:var(--muted);font-size:0.8rem">${totalVotes(poll.id)} голосов</span>
+      </div>
+    `;
+    list.appendChild(card);
+  });
+}
+
+function activatePoll(id) {
+  if (state.activePollId === id) {
+    state.isOpen = !state.isOpen;
+  } else {
+    state.activePollId = id;
+    state.isOpen = true;
+    renderQR(id);
+  }
+  updateStatusBadge();
+  renderPolls();
+  renderLive();
+}
+
+function resetPoll(id) {
+  state.votes[id] = new Array(POLLS.find(p=>p.id===id).options.length).fill(0);
+  renderPolls();
+  renderLive();
+}
+
+function totalVotes(id) {
+  return (state.votes[id] || []).reduce((a,b)=>a+b, 0);
+}
+
+function updateStatusBadge() {
+  const badge = document.getElementById('active-status');
+  if (state.activePollId && state.isOpen) {
+    const poll = POLLS.find(p=>p.id===state.activePollId);
+    badge.textContent = '● Открыто: ' + poll.stage;
+    badge.className = 'status-badge status-open';
+  } else if (state.activePollId && !state.isOpen) {
+    badge.textContent = '⏸ Закрыто';
+    badge.className = 'status-badge status-closed';
+  } else {
+    badge.textContent = 'Нет активного опроса';
+    badge.className = 'status-badge status-closed';
+  }
+}
+
+function renderQR(pollId) {
+  const container = document.getElementById('qr-container');
+  const url = window.location.href.split('?')[0] + '?vote=1';
+  container.innerHTML = `
+    <div style="font-size:0.75rem;color:#888;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.8rem">QR для участников</div>
+    <div id="qrcode"></div>
+    <div class="qr-url">${url}</div>
+    <div style="font-size:0.8rem;color:#888;margin-top:0.5rem;font-style:italic">Участники сканируют этот QR своим телефоном</div>
+  `;
+  new QRCode(document.getElementById('qrcode'), {
+    text: url,
+    width: 180,
+    height: 180,
+    colorDark: '#1A1208',
+    colorLight: '#ffffff',
+    correctLevel: QRCode.CorrectLevel.M
+  });
+}
+
+function renderLive() {
+  const view = document.getElementById('live-view');
+  if (!state.activePollId) { view.innerHTML = ''; return; }
+  const poll = POLLS.find(p=>p.id===state.activePollId);
+  const total = totalVotes(poll.id);
+  const rows = poll.options.map((opt, i) => {
+    const count = state.votes[poll.id][i] || 0;
+    const pct = total > 0 ? Math.round(count/total*100) : 0;
+    return `
+      <div class="result-row">
+        <div class="result-label">
+          <span>${poll.labels[i]}) ${opt.substring(0,55)}${opt.length>55?'…':''}</span>
+          <span>${pct}%</span>
+        </div>
+        <div class="result-bar-bg">
+          <div class="result-bar" style="width:${pct}%"></div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  view.innerHTML = `
+    <div class="live-panel">
+      <h3>📊 Результаты в реальном времени</h3>
+      ${rows}
+      <div class="vote-count">Проголосовало: <strong>${total}</strong> человек</div>
+    </div>
+  `;
+}
+
+let liveInterval = null;
+function startLiveRefresh() {
+  if (liveInterval) return;
+  liveInterval = setInterval(() => { renderLive(); renderPolls(); updateStatusBadge(); }, 1000);
+}
+
+// ===== VOTER =====
+function renderVoter() {
+  const card = document.getElementById('voter-card');
+  
+  if (!state.activePollId || !state.isOpen) {
+    card.innerHTML = `
+      <div class="egg-icon">🥚</div>
+      <div class="no-poll">Голосование пока не открыто.<br>Ожидайте команды ведущего.</div>
+    `;
+    return;
+  }
+
+  const poll = POLLS.find(p=>p.id===state.activePollId);
+  
+  if (state.voterVoted[poll.id]) {
+    card.innerHTML = `
+      <div class="voted-message">
+        <div class="big-check">✅</div>
+        <h3>Ваш голос учтён!</h3>
+        <p>Спасибо за участие в дебатах</p>
+      </div>
+    `;
+    return;
+  }
+
+  const opts = poll.options.map((opt, i) => `
+    <button class="vote-option" id="opt-${i}" onclick="selectOpt(${i})">
+      <span class="opt-letter">${poll.labels[i]}</span>
+      <span>${opt}</span>
+    </button>
+  `).join('');
+
+  card.innerHTML = `
+    <div class="egg-icon">✝️</div>
+    <div class="poll-stage">${poll.stage}</div>
+    <h2>${poll.question}</h2>
+    ${opts}
+    <button class="btn-vote" id="submit-vote" disabled onclick="submitVote()">Проголосовать</button>
+  `;
+  card._selected = null;
+}
+
+let selectedOpt = null;
+function selectOpt(i) {
+  selectedOpt = i;
+  document.querySelectorAll('.vote-option').forEach((el, idx) => {
+    el.classList.toggle('selected', idx === i);
+  });
+  document.getElementById('submit-vote').disabled = false;
+}
+
+function submitVote() {
+  if (selectedOpt === null || !state.activePollId || !state.isOpen) return;
+  const poll = POLLS.find(p=>p.id===state.activePollId);
+  state.votes[poll.id][selectedOpt]++;
+  state.voterVoted[poll.id] = true;
+  selectedOpt = null;
+  renderVoter();
+  showToast('Голос принят! ✨');
+}
+
+// ===== TOAST =====
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ===== URL ROUTING =====
+function init() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('vote') === '1') {
+    showVoter();
+  }
+}
+
+init();
+</script>
+</body>
+</html>
