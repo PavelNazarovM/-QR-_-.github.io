@@ -26,11 +26,9 @@
     min-height: 100vh;
   }
 
-  /* ===== SCREEN ROUTER ===== */
   .screen { display: none; }
   .screen.active { display: block; }
 
-  /* ===== LANDING ===== */
   #landing {
     min-height: 100vh;
     display: flex;
@@ -92,347 +90,85 @@
     text-transform: uppercase;
   }
 
-  .btn-gold {
-    background: var(--gold);
-    color: var(--deep);
-  }
+  .btn-gold { background: var(--gold); color: var(--deep); }
   .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
-
-  .btn-outline {
-    background: transparent;
-    color: var(--cream);
-    border: 1px solid rgba(201,168,76,0.5);
-  }
+  .btn-outline { background: transparent; color: var(--cream); border: 1px solid rgba(201,168,76,0.5); }
   .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
 
-  /* ===== ADMIN PANEL ===== */
-  #admin {
-    min-height: 100vh;
-    background: var(--deep);
-    color: var(--cream);
-    padding: 1.5rem;
-  }
-
-  .admin-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid rgba(201,168,76,0.3);
-    padding-bottom: 1rem;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .admin-header h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.3rem;
-    color: var(--gold);
-  }
-
-  .polls-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1rem;
-    margin-bottom: 2rem;
-  }
-
-  .poll-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(201,168,76,0.2);
-    border-radius: 6px;
-    padding: 1.2rem;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
+  #admin { min-height: 100vh; background: var(--deep); color: var(--cream); padding: 1.5rem; }
+  .admin-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(201,168,76,0.3); padding-bottom: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.5rem; }
+  .admin-header h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--gold); }
+  .polls-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+  .poll-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.2); border-radius: 6px; padding: 1.2rem; transition: all 0.2s; }
   .poll-card:hover { border-color: var(--gold); background: rgba(201,168,76,0.05); }
-  .poll-card.active-poll { border-color: var(--gold); background: rgba(201,168,76,0.1); }
+  .poll-card .stage { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold); margin-bottom: 0.4rem; }
+  .poll-card h3 { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--cream); margin-bottom: 0.8rem; line-height: 1.3; }
+  .poll-card .options-preview { font-size: 0.85rem; color: var(--muted); font-style: italic; }
+  .btn-small { font-size: 0.8rem; padding: 0.4rem 1rem; margin-top: 0.8rem; }
 
-  .poll-card .stage {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--gold);
-    margin-bottom: 0.4rem;
-  }
+  .live-panel { background: rgba(255,255,255,0.03); border: 1px solid rgba(201,168,76,0.3); border-radius: 6px; padding: 1.5rem; margin-top: 1rem; }
+  .live-panel h3 { font-family: 'Playfair Display', serif; color: var(--gold); margin-bottom: 1.2rem; font-size: 1.1rem; }
+  .result-row { margin-bottom: 1rem; }
+  .result-label { display: flex; justify-content: space-between; font-size: 0.95rem; color: var(--cream); margin-bottom: 0.3rem; }
+  .result-bar-bg { background: rgba(255,255,255,0.08); border-radius: 2px; height: 8px; overflow: hidden; }
+  .result-bar { height: 100%; background: linear-gradient(90deg, var(--wine), var(--gold)); border-radius: 2px; transition: width 0.5s ease; }
+  .vote-count { color: var(--muted); font-size: 0.85rem; margin-top: 0.8rem; font-style: italic; }
 
-  .poll-card h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem;
-    color: var(--cream);
-    margin-bottom: 0.8rem;
-    line-height: 1.3;
-  }
-
-  .poll-card .options-preview {
-    font-size: 0.85rem;
-    color: var(--muted);
-    font-style: italic;
-  }
-
-  .btn-small {
-    font-size: 0.8rem;
-    padding: 0.4rem 1rem;
-    margin-top: 0.8rem;
-  }
-
-  /* ===== LIVE RESULTS ===== */
-  .live-panel {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(201,168,76,0.3);
-    border-radius: 6px;
-    padding: 1.5rem;
-    margin-top: 1rem;
-  }
-
-  .live-panel h3 {
-    font-family: 'Playfair Display', serif;
-    color: var(--gold);
-    margin-bottom: 1.2rem;
-    font-size: 1.1rem;
-  }
-
-  .result-row {
-    margin-bottom: 1rem;
-  }
-
-  .result-label {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.95rem;
-    color: var(--cream);
-    margin-bottom: 0.3rem;
-  }
-
-  .result-bar-bg {
-    background: rgba(255,255,255,0.08);
-    border-radius: 2px;
-    height: 8px;
-    overflow: hidden;
-  }
-
-  .result-bar {
-    height: 100%;
-    background: linear-gradient(90deg, var(--wine), var(--gold));
-    border-radius: 2px;
-    transition: width 0.5s ease;
-  }
-
-  .vote-count {
-    color: var(--muted);
-    font-size: 0.85rem;
-    margin-top: 0.8rem;
-    font-style: italic;
-  }
-
-  /* QR section */
-  .qr-section {
-    text-align: center;
-    padding: 1.5rem;
-    border: 1px solid rgba(201,168,76,0.2);
-    border-radius: 6px;
-    background: white;
-  }
-
+  .qr-section { text-align: center; padding: 1.5rem; border: 1px solid rgba(201,168,76,0.2); border-radius: 6px; background: white; }
   .qr-section canvas { display: block; margin: 0 auto; }
+  .qr-url { font-size: 0.85rem; color: #444; margin-top: 0.5rem; word-break: break-all; font-family: monospace; }
 
-  .qr-url {
-    font-size: 0.85rem;
-    color: #444;
-    margin-top: 0.5rem;
-    word-break: break-all;
-    font-family: monospace;
-  }
-
-  .status-badge {
-    display: inline-block;
-    padding: 0.2rem 0.8rem;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-  }
+  .status-badge { display: inline-block; padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
   .status-open { background: rgba(50,200,100,0.2); color: #5de88c; border: 1px solid rgba(50,200,100,0.3); }
   .status-closed { background: rgba(200,50,50,0.2); color: #e85d5d; border: 1px solid rgba(200,50,50,0.3); }
 
-  /* ===== VOTER PANEL ===== */
-  #voter {
-    min-height: 100vh;
-    background: var(--cream);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem 1.5rem;
-  }
+  #voter { min-height: 100vh; background: var(--cream); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem 1.5rem; }
+  .voter-card { background: white; border-radius: 12px; padding: 2.5rem 2rem; max-width: 480px; width: 100%; box-shadow: 0 20px 60px rgba(26,18,8,0.12); text-align: center; }
+  .voter-card .egg-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .voter-card .poll-stage { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--gold); font-weight: 600; margin-bottom: 0.5rem; }
+  .voter-card h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--ink); margin-bottom: 2rem; line-height: 1.3; }
 
-  .voter-card {
-    background: white;
-    border-radius: 12px;
-    padding: 2.5rem 2rem;
-    max-width: 480px;
-    width: 100%;
-    box-shadow: 0 20px 60px rgba(26,18,8,0.12);
-    text-align: center;
-  }
-
-  .voter-card .egg-icon {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .voter-card .poll-stage {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--gold);
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-  }
-
-  .voter-card h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
-    color: var(--ink);
-    margin-bottom: 2rem;
-    line-height: 1.3;
-  }
-
-  .vote-option {
-    width: 100%;
-    background: var(--cream);
-    border: 2px solid transparent;
-    border-radius: 8px;
-    padding: 1rem 1.2rem;
-    margin-bottom: 0.8rem;
-    cursor: pointer;
-    font-family: 'Crimson Pro', serif;
-    font-size: 1.05rem;
-    color: var(--ink);
-    text-align: left;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-  }
-
+  .vote-option { width: 100%; background: var(--cream); border: 2px solid transparent; border-radius: 8px; padding: 1rem 1.2rem; margin-bottom: 0.8rem; cursor: pointer; font-family: 'Crimson Pro', serif; font-size: 1.05rem; color: var(--ink); text-align: left; transition: all 0.2s; display: flex; align-items: center; gap: 0.8rem; }
   .vote-option:hover { border-color: var(--gold); background: #FFF8E8; }
   .vote-option.selected { border-color: var(--gold); background: #FFF8E8; }
-  .vote-option .opt-letter {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 1.8rem;
-    height: 1.8rem;
-    border-radius: 50%;
-    background: var(--gold);
-    color: white;
-    font-weight: 700;
-    font-size: 0.85rem;
-    flex-shrink: 0;
-  }
-
+  .vote-option .opt-letter { display: inline-flex; align-items: center; justify-content: center; width: 1.8rem; height: 1.8rem; border-radius: 50%; background: var(--gold); color: white; font-weight: 700; font-size: 0.85rem; flex-shrink: 0; }
   .vote-option.selected .opt-letter { background: var(--wine); }
 
-  .btn-vote {
-    width: 100%;
-    padding: 1rem;
-    margin-top: 1rem;
-    background: var(--wine);
-    color: white;
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s;
-    letter-spacing: 0.03em;
-  }
-
+  .btn-vote { width: 100%; padding: 1rem; margin-top: 1rem; background: var(--wine); color: white; font-family: 'Playfair Display', serif; font-size: 1.1rem; border: none; border-radius: 8px; cursor: pointer; transition: all 0.2s; letter-spacing: 0.03em; }
   .btn-vote:hover { background: #7d2f41; }
   .btn-vote:disabled { opacity: 0.4; cursor: not-allowed; }
 
-  .voted-message {
-    padding: 2rem;
-    text-align: center;
-  }
+  .voted-message { padding: 2rem; text-align: center; }
   .voted-message .big-check { font-size: 3rem; margin-bottom: 1rem; }
   .voted-message h3 { font-family: 'Playfair Display', serif; color: var(--ink); font-size: 1.4rem; }
   .voted-message p { color: var(--muted); font-style: italic; margin-top: 0.5rem; }
 
-  .no-poll {
-    padding: 2rem;
-    text-align: center;
-    color: var(--muted);
-    font-style: italic;
-    font-size: 1.1rem;
-  }
-
-  /* control row */
+  .no-poll { padding: 2rem; text-align: center; color: var(--muted); font-style: italic; font-size: 1.1rem; }
   .ctrl-row { display: flex; gap: 0.8rem; flex-wrap: wrap; align-items: center; margin-top: 1rem; }
-
-  /* admin result live view */
   #live-view { margin-top: 1.5rem; }
-
   .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+
   @media (max-width: 700px) { .grid-2 { grid-template-columns: 1fr; } .polls-grid { grid-template-columns: 1fr; } }
 
-  .back-btn {
-    background: none;
-    border: none;
-    color: var(--muted);
-    cursor: pointer;
-    font-size: 0.9rem;
-    font-family: 'Crimson Pro', serif;
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-    padding: 0;
-  }
+  .back-btn { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 0.9rem; font-family: 'Crimson Pro', serif; display: flex; align-items: center; gap: 0.3rem; padding: 0; }
   .back-btn:hover { color: var(--gold); }
 
-  /* toast */
-  .toast {
-    position: fixed;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%) translateY(2rem);
-    background: var(--deep);
-    color: var(--gold);
-    padding: 0.7rem 1.5rem;
-    border-radius: 30px;
-    border: 1px solid var(--gold);
-    font-size: 0.9rem;
-    opacity: 0;
-    transition: all 0.3s;
-    z-index: 100;
-    white-space: nowrap;
-  }
+  .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(2rem); background: var(--deep); color: var(--gold); padding: 0.7rem 1.5rem; border-radius: 30px; border: 1px solid var(--gold); font-size: 0.9rem; opacity: 0; transition: all 0.3s; z-index: 100; white-space: nowrap; }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-  .divider {
-    height: 1px;
-    background: rgba(201,168,76,0.2);
-    margin: 1.5rem 0;
-  }
 </style>
 </head>
 <body>
 
-<!-- LANDING -->
 <div id="landing" class="screen active">
   <div class="ornament">✦ ✦ ✦</div>
   <h1>Пасха:<br><span>Традиция или Факт?</span></h1>
   <p>Интерактивные дебаты · Система голосований</p>
   <div class="btn-group">
-    <button class="btn btn-gold" onclick="window.showAdmin()">🎤 Панель ведущего</button>
-    <button class="btn btn-outline" onclick="window.showVoter()">📱 Проголосовать</button>
+    <button class="btn btn-gold" onclick="showAdmin()">🎤 Панель ведущего</button>
+    <button class="btn btn-outline" onclick="showVoter()">📱 Проголосовать</button>
   </div>
 </div>
 
-<!-- ADMIN PANEL -->
 <div id="admin" class="screen">
   <div class="admin-header">
     <div>
@@ -441,16 +177,14 @@
     </div>
     <div style="display:flex;gap:0.8rem;align-items:center">
       <span id="active-status" class="status-badge status-closed">Нет активного опроса</span>
-      <button class="btn btn-outline btn-small" onclick="window.showScreen('landing')">Выйти</button>
+      <button class="btn btn-outline btn-small" onclick="showScreen('landing')">Выйти</button>
     </div>
   </div>
-
   <div class="grid-2">
     <div>
       <div style="color:var(--muted);font-size:0.8rem;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.8rem">Опросы по этапам</div>
       <div class="polls-grid" id="polls-list"></div>
     </div>
-
     <div>
       <div class="qr-section" id="qr-container">
         <div style="color:#aaa;font-style:italic;padding:2rem 0">Выберите опрос, чтобы отобразить QR-код</div>
@@ -460,10 +194,9 @@
   </div>
 </div>
 
-<!-- VOTER PANEL -->
 <div id="voter" class="screen">
   <div style="position:absolute;top:1rem;left:1rem">
-    <button class="back-btn" onclick="window.showScreen('landing')">← Назад</button>
+    <button class="back-btn" onclick="showScreen('landing')">← Назад</button>
   </div>
   <div style="text-align:center;margin-bottom:1.5rem">
     <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);margin-bottom:0.3rem">Пасхальные дебаты</div>
@@ -474,656 +207,350 @@
 
 <div class="toast" id="toast"></div>
 
-<!-- QR lib -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-<script>
-// ===== DATA =====
-const POLLS = [
-  // ── ЭТАП 1: 20 дебатных вопросов (Арам vs Василий) ──
-  {
-    id: 'e1q1', stage: 'Этап 1 · Вопрос 1',
-    question: 'Что для вас Пасха в первую очередь — тёплый семейный ритуал с куличами и крашеными яйцами или нечто принципиально иное?',
-    options: ['🕊 Арам — семейный ритуал, люди и тепло', '✝️ Василий — факт Воскресения, центр истории'],
-    labels: ['А', 'Б'], type: 'debate'
-  },
-  {
-    id: 'e1q2', stage: 'Этап 1 · Вопрос 2',
-    question: 'Почему центральный христианский праздник назван «Пасха» — «прохождение мимо»? Это культурное заимствование или сквозная идея спасения?',
-    options: ['🕊 Арам — культурная преемственность, адаптация', '✝️ Василий — исполнение пророчеств, один Божий план'],
-    labels: ['А', 'Б'], type: 'debate'
-  },
-  {
-    id: 'e1q3', stage: 'Этап 1 · Вопрос 3',
-    question: 'Если рассматривать Пасху только как культурный код — что он даёт современному человеку, кроме эстетики и ностальгии?',
-    options: ['🕊 Арам — устойчивость, идентичность, связь поколений', '✝️ Василий — без Воскресения это оболочка без силы'],
-    labels: ['А', 'Б'], type: 'debate'
-  },
-  {
-    id: 'e1q4', stage: 'Этап 1 · Вопрос 4',
-    question: 'Можно ли глубоко пережить Пасху, не посещая богослужения, а просто соблюдая традиции?',
-    options: ['🕊 Арам — да, искренний личный опыт без церкви', '✝️ Василий — без встречи с Воскресшим это бытовая традиция'],
-    labels: ['А', 'Б'], type: 'debate'
-  },
-  {
-    id: 'e1q5', stage: 'Этап 1 · Вопрос 5',
-    question: 'Может ли Пасха быть «событием, изменившим судьбу человечества», если огромная часть мира о ней не знает?',
-    options: ['🕊 Арам — нет, влияние ограничено культурно', '✝️ Василий — речь о том, что произошло, а не кто знает'],
-    labels: ['А', 'Б'], type: 'debate'
-  },
-  {
-    id: 'e1q6', stage: 'Этап 1 · Вопрос 6',
-    question: 'Какова связь христианской Пасхи и еврейского Песаха? Это реинтерпретация или исполнение пророчеств?',
-    options: ['🕊 Арам — развитие и переосмысление традиции', '✝️ Василий — исполнение: агнец, кровь, спасение — всё указывало на Него'],
-    labels: ['А', 'Б'], type: 'debate'
-  },
-  {
-    id: 'e1q7', stage: 'Этап 1 · Вопрос 7',
-    question: 'Предложила ли христианская Пасха миру концепцию любви, которая сильнее смерти? В чём это выразилось?',
-    options: ['🕊 Арам — мощная метафора, вдохновляющая на нравственность', '✝️ Василий — не метафора, а реальная победа через Воскресение'],
-    labels: ['А', 'Б'], type: 'debate'
-  },
-  {
-    id: 'e1q8', stage: 'Этап 1 · Вопрос 8',
-    question: 'Как вы относитесь к коммерциализации Пасхи — шоколадные кролики, распродажи? Это эволюция или выхолащивание?',
-    options: ['🕊 Арам — естественная адаптация культуры', '✝️ Василий — смещение к потреблению убивает суть'],
-    labels: ['А', 'Б'], type: 'debate'
-  },
-  {
-    id: 'e1q9', stage: 'Этап 1 · Вопрос 9',
-    question: 'Можно ли говорить о «пасхальном опыте» вне религии — как о переживании кризиса, обновления? Каков источник этого опыта?',
-    options: ['🕊 Арам — универсальный психологический процесс', '✝️ Василий — истинное обновление связано со Христом'],
-    labels: ['А', 'Б'], type: 'debate'
-  },
-  {
-    id: 'e1q10', stage: 'Этап 1 · Вопрос 10',
-    question: 'Сохранились бы пасхальные традиции так же мощно, если бы исчезла вера в Воскресение? Что останется через сто лет?',
-    options: ['🕊 Арам — останется культурная память', '✝️ Василий — без веры останется только форма, сила исчезнет'],
-    labels: ['А', 'Б'], type: 'debate'
-  },
-  {
-    id: 'e1q11', stage: 'Этап 1 · Вопрос 11',
-    question: 'Представьте: исчезли все атрибуты — церкви, куличи, «Христос воскрес». Останется ли Пасха? Что именно?',
-    options: ['🕊 Арам — останется любовь и семейное единство', '✝️ Василий — останется факт Воскресения, «Он воскрес»'],
-    labels: ['А', 'Б'], type: 'debate'
-  },
-  {
-    id: 'e1q12', stage: 'Этап 1 · Вопрос 12',
-    question: 'Почему вообще праздновать Пасху, если не веришь в Воскресение?',
-    options: ['🕊 Арам — культура важнее убеждений, традиция объединяет', '✝️ Василий — без веры это противоречие, формальность'],
-    labels: ['А', 'Б'], type: 'debate'
-  },
-  {
-    id: 'e1q13', stage: 'Этап 1 · Вопрос 13',
-    question: 'Что важнее: испечь кулич или поверить, что Христос воскрес?',
-    options: ['🕊 Арам — кулич — это конкретный жест любви здесь и сейчас', '✝️ Василий — без истины это просто еда'],
-    labels: ['А', 'Б'], type: 'debate'
-  },
-  {
-    id: 'e1q14', stage: 'Этап 1 · Вопрос 14',
-    question: '«Христос воскрес» — это приветствие или исповедание веры?',
-    options: ['🕊 Арам — культурное приветствие, форма участия', '✝️ Василий — исповедание веры, «устами исповедовать — спасёшься»'],
-    labels: ['А', 'Б'], type: 'debate'
-  },
-  {
-    id: 'e1q15', stage: 'Этап 1 · Вопрос 15',
-    question: 'Если убрать Воскресение, останется ли что-то уникальное в христианстве?',
-    options: ['🕊 Арам — остаётся этика, культура, гуманизм', '✝️ Василий — «мы несчастнее всех человеков», всё рушится'],
-    labels: ['А', 'Б'], type: 'debate'
-  },
-  {
-    id: 'e1q16', stage: 'Этап 1 · Вопрос 16',
-    question: 'Если Воскресение — исторический факт, почему в него верят не все?',
-    options: ['🕊 Арам — доказательства неоднозначны, допускают разные интерпретации', '✝️ Василий — проблема не в фактах, а в выборе человека'],
-    labels: ['А', 'Б'], type: 'debate'
-  },
-  {
-    id: 'e1q17', stage: 'Этап 1 · Вопрос 17',
-    question: 'Пасха — это день памяти или день победы?',
-    options: ['🕊 Арам — день памяти о великом учителе', '✝️ Василий — «Я есмь воскресение и жизнь», день победы'],
-    labels: ['А', 'Б'], type: 'debate'
-  },
-  {
-    id: 'e1q18', stage: 'Этап 1 · Вопрос 18',
-    question: 'Может ли традиция существовать 2000 лет без реального ядра в центре?',
-    options: ['🕊 Арам — да, люди сами создают и поддерживают смыслы', '✝️ Василий — без истины долго не живёт, основание необходимо'],
-    labels: ['А', 'Б'], type: 'debate'
-  },
-  {
-    id: 'e1q19', stage: 'Этап 1 · Вопрос 19',
-    question: 'Можно ли быть христианином и не верить в буквальное Воскресение?',
-    options: ['🕊 Арам — да, как культурная идентичность и этика', '✝️ Василий — нет, 1 Кор. 15 прямо исключает такую позицию'],
-    labels: ['А', 'Б'], type: 'debate'
-  },
-  {
-    id: 'e1q20', stage: 'Этап 1 · Вопрос 20',
-    question: 'Пасха без Воскресения — это трагедия или просто другой праздник?',
-    options: ['🕊 Арам — другой формат, более универсальный', '✝️ Василий — утрата истины, «истина сделает вас свободными»'],
-    labels: ['А', 'Б'], type: 'debate'
-  },
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+  import { getDatabase, ref, set, get, onValue, update, increment } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
-  // ── ЭТАП 2: Факт / Фейк (10 утверждений) ──
-  {
-    id: 'e2q1', stage: 'Этап 2 · Утверждение 1',
-    question: 'Иисус из Назарета — реальная историческая личность, упоминаемая не только в Библии, но и у римских историков (Тацит, Светоний)',
-    options: ['✅ Исторический факт', '❌ Миф / Недоказано'],
-    labels: ['Ф', 'М'], type: 'factfake', answer: 0,
-    explain: 'Факт. Даже атеистические учёные признают историческое существование Иисуса.'
-  },
-  {
-    id: 'e2q2', stage: 'Этап 2 · Утверждение 2',
-    question: 'Римские солдаты действительно запечатывали гробницы и ставили охрану для «опасных» преступников — стандартная процедура',
-    options: ['✅ Исторический факт', '❌ Миф / Недоказано'],
-    labels: ['Ф', 'М'], type: 'factfake', answer: 0,
-    explain: 'Факт. Соответствует римскому военному уставу.'
-  },
-  {
-    id: 'e2q3', stage: 'Этап 2 · Утверждение 3',
-    question: 'Ученики Иисуса украли тело, чтобы создать легенду о воскресении, и потом умерли счастливыми обманщиками',
-    options: ['✅ Исторический факт', '❌ Миф / Недоказано'],
-    labels: ['Ф', 'М'], type: 'factfake', answer: 1,
-    explain: 'Фейк. Психологически невозможно, чтобы 11 человек пошли на мученическую смерть, зная, что лгут.'
-  },
-  {
-    id: 'e2q4', stage: 'Этап 2 · Утверждение 4',
-    question: 'Иисус Христос после воскресения явился сначала Марии Магдалине, у которой ранее изгнал семь бесов',
-    options: ['✅ Исторический факт', '❌ Миф / Недоказано'],
-    labels: ['Ф', 'М'], type: 'factfake', answer: 0,
-    explain: 'Факт. Подтверждается несколькими авторами Евангелий.'
-  },
-  {
-    id: 'e2q5', stage: 'Этап 2 · Утверждение 5',
-    question: 'Иисус Христос воскрес духовно, а не физически. Его тело осталось в гробнице',
-    options: ['✅ Исторический факт', '❌ Миф / Недоказано'],
-    labels: ['Ф', 'М'], type: 'factfake', answer: 1,
-    explain: 'Фейк. Фома вкладывал пальцы в раны — с призраком это было бы невозможно.'
-  },
-  {
-    id: 'e2q6', stage: 'Этап 2 · Утверждение 6',
-    question: 'Христос не умер на кресте, а впал в кому. Выжил благодаря холодной пещере и травам, после ушёл в Кашмир',
-    options: ['✅ Исторический факт', '❌ Миф / Недоказано'],
-    labels: ['Ф', 'М'], type: 'factfake', answer: 1,
-    explain: 'Фейк. Медицински и исторически невозможно. Римские центурионы были профессионалами в казнях.'
-  },
-  {
-    id: 'e2q7', stage: 'Этап 2 · Утверждение 7',
-    question: 'Тело Христа украли садовник или хозяин гробницы',
-    options: ['✅ Исторический факт', '❌ Миф / Недоказано'],
-    labels: ['Ф', 'М'], type: 'factfake', answer: 1,
-    explain: 'Фейк. Если бы тело украл садовник, он бы сознался или убежал, но не притворялся бы воскресшим Богом.'
-  },
-  {
-    id: 'e2q8', stage: 'Этап 2 · Утверждение 8',
-    question: 'Иаков, брат Иисуса, во время земного служения не верил в Него. После Воскресения стал лидером церкви и принял мученическую смерть',
-    options: ['✅ Исторический факт', '❌ Миф / Недоказано'],
-    labels: ['Ф', 'М'], type: 'factfake', answer: 0,
-    explain: 'Факт. Павел упоминает явление Христа Иакову (1 Кор. 15:7).'
-  },
-  {
-    id: 'e2q9', stage: 'Этап 2 · Утверждение 9',
-    question: 'Ученики были так травмированы смертью Учителя, что мозг «сгенерировал» групповые видения воскресшего Иисуса',
-    options: ['✅ Исторический факт', '❌ Миф / Недоказано'],
-    labels: ['Ф', 'М'], type: 'factfake', answer: 1,
-    explain: 'Фейк. Групповых галлюцинаций с одинаковыми деталями в медицине не зафиксировано.'
-  },
-  {
-    id: 'e2q10', stage: 'Этап 2 · Утверждение 10',
-    question: 'Около 90% учёных признают шесть «минимальных фактов» о смерти и воскресении Христа',
-    options: ['✅ Исторический факт', '❌ Миф / Недоказано'],
-    labels: ['Ф', 'М'], type: 'factfake', answer: 0,
-    explain: 'Факт. Профессор Гэри Хабермас проанализировал ~4500 научных публикаций — около 90% признают эти факты.'
-  },
-
-  // ── ЭТАП 4: Финальные вопросы (12 вопросов Да/Нет) ──
-  {
-    id: 'e4q1', stage: 'Этап 4 · Вопрос 1',
-    question: 'Пасха — это про Бога или про людей?',
-    options: ['🙏 Про Бога', '👨‍👩‍👧 Про людей'],
-    labels: ['Б', 'Л'], type: 'final'
-  },
-  {
-    id: 'e4q2', stage: 'Этап 4 · Вопрос 2',
-    question: 'Если Христос не воскрес, Пасху стоит отменить?',
-    options: ['✅ Да', '❌ Нет'],
-    labels: ['Д', 'Н'], type: 'final'
-  },
-  {
-    id: 'e4q3', stage: 'Этап 4 · Вопрос 3',
-    question: 'Можно быть христианином и не верить в воскресение?',
-    options: ['✅ Да', '❌ Нет'],
-    labels: ['Д', 'Н'], type: 'final'
-  },
-  {
-    id: 'e4q4', stage: 'Этап 4 · Вопрос 4',
-    question: '«Христос воскрес» для вас — приветствие или исповедание веры?',
-    options: ['👋 Приветствие', '✝️ Исповедание веры'],
-    labels: ['П', 'И'], type: 'final'
-  },
-  {
-    id: 'e4q5', stage: 'Этап 4 · Вопрос 5',
-    question: 'Без церкви Пасха останется?',
-    options: ['✅ Да', '❌ Нет'],
-    labels: ['Д', 'Н'], type: 'final'
-  },
-  {
-    id: 'e4q6', stage: 'Этап 4 · Вопрос 6',
-    question: 'Без семьи Пасха останется?',
-    options: ['✅ Да', '❌ Нет'],
-    labels: ['Д', 'Н'], type: 'final'
-  },
-  {
-    id: 'e4q7', stage: 'Этап 4 · Вопрос 7',
-    question: 'Шоколадный кролик портит Пасху?',
-    options: ['✅ Да, портит', '❌ Нет, нормально'],
-    labels: ['Д', 'Н'], type: 'final'
-  },
-  {
-    id: 'e4q8', stage: 'Этап 4 · Вопрос 8',
-    question: 'Вы бы праздновали Пасху, если бы все вокруг перестали?',
-    options: ['✅ Да', '❌ Нет'],
-    labels: ['Д', 'Н'], type: 'final'
-  },
-  {
-    id: 'e4q9', stage: 'Этап 4 · Вопрос 9',
-    question: 'Традиция красить яйца важнее богословия?',
-    options: ['✅ Да', '❌ Нет'],
-    labels: ['Д', 'Н'], type: 'final'
-  },
-  {
-    id: 'e4q10', stage: 'Этап 4 · Вопрос 10',
-    question: 'Апостолы умерли за ложь?',
-    options: ['✅ Да', '❌ Нет'],
-    labels: ['Д', 'Н'], type: 'final'
-  },
-  {
-    id: 'e4q11', stage: 'Этап 4 · Вопрос 11',
-    question: 'Если бы тело Христа нашли, вы бы стали атеистом?',
-    options: ['✅ Да', '❌ Нет'],
-    labels: ['Д', 'Н'], type: 'final'
-  },
-  {
-    id: 'e4q12', stage: 'Этап 4 · Вопрос 12',
-    question: 'Через 100 лет Пасха останется?',
-    options: ['✅ Да', '❌ Нет'],
-    labels: ['Д', 'Н'], type: 'final'
-  }
-];
-
-// ===== STATE (сохраняется в localStorage для админа) =====
-const STORAGE_KEY = 'easter_polls_state';
-
-function loadState() {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      return {
-        activePollId: parsed.activePollId || null,
-        isOpen: parsed.isOpen || false,
-        votes: parsed.votes || {},
-        voterVoted: parsed.voterVoted || {}
-      };
-    }
-  } catch(e) {
-    console.error('Failed to load state:', e);
-  }
-  
-  const defaultState = {
-    activePollId: null,
-    isOpen: false,
-    votes: {},
-    voterVoted: {}
+  const firebaseConfig = {
+    apiKey: "AIzaSyA0mKSPgI-voDXOJq6LaPqN-94IHUaaM8o",
+    authDomain: "easter-polls.firebaseapp.com",
+    databaseURL: "https://easter-polls-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "easter-polls",
+    storageBucket: "easter-polls.firebasestorage.app",
+    messagingSenderId: "471196032667",
+    appId: "1:471196032667:web:9d72f355ec2388de4df03e"
   };
-  
-  POLLS.forEach(p => { defaultState.votes[p.id] = new Array(p.options.length).fill(0); });
-  return defaultState;
-}
 
-function saveState() {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  } catch(e) {
-    console.error('Failed to save state:', e);
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  // Data
+  const POLLS = [
+    { id: 'e1q1', stage: 'Этап 1 · Вопрос 1', question: 'Что для вас Пасха в первую очередь — тёплый семейный ритуал с куличами и крашеными яйцами или нечто принципиально иное?', options: ['🕊 Арам — семейный ритуал, люди и тепло', '✝️ Василий — факт Воскресения, центр истории'], labels: ['А', 'Б'], type: 'debate' },
+    { id: 'e1q2', stage: 'Этап 1 · Вопрос 2', question: 'Почему центральный христианский праздник назван «Пасха» — «прохождение мимо»? Это культурное заимствование или сквозная идея спасения?', options: ['🕊 Арам — культурная преемственность, адаптация', '✝️ Василий — исполнение пророчеств, один Божий план'], labels: ['А', 'Б'], type: 'debate' },
+    { id: 'e1q3', stage: 'Этап 1 · Вопрос 3', question: 'Если рассматривать Пасху только как культурный код — что он даёт современному человеку, кроме эстетики и ностальгии?', options: ['🕊 Арам — устойчивость, идентичность, связь поколений', '✝️ Василий — без Воскресения это оболочка без силы'], labels: ['А', 'Б'], type: 'debate' },
+    { id: 'e1q4', stage: 'Этап 1 · Вопрос 4', question: 'Можно ли глубоко пережить Пасху, не посещая богослужения, а просто соблюдая традиции?', options: ['🕊 Арам — да, искренний личный опыт без церкви', '✝️ Василий — без встречи с Воскресшим это бытовая традиция'], labels: ['А', 'Б'], type: 'debate' },
+    { id: 'e1q5', stage: 'Этап 1 · Вопрос 5', question: 'Может ли Пасха быть «событием, изменившим судьбу человечества», если огромная часть мира о ней не знает?', options: ['🕊 Арам — нет, влияние ограничено культурно', '✝️ Василий — речь о том, что произошло, а не кто знает'], labels: ['А', 'Б'], type: 'debate' },
+    { id: 'e1q6', stage: 'Этап 1 · Вопрос 6', question: 'Какова связь христианской Пасхи и еврейского Песаха? Это реинтерпретация или исполнение пророчеств?', options: ['🕊 Арам — развитие и переосмысление традиции', '✝️ Василий — исполнение: агнец, кровь, спасение — всё указывало на Него'], labels: ['А', 'Б'], type: 'debate' },
+    { id: 'e1q7', stage: 'Этап 1 · Вопрос 7', question: 'Предложила ли христианская Пасха миру концепцию любви, которая сильнее смерти? В чём это выразилось?', options: ['🕊 Арам — мощная метафора, вдохновляющая на нравственность', '✝️ Василий — не метафора, а реальная победа через Воскресение'], labels: ['А', 'Б'], type: 'debate' },
+    { id: 'e1q8', stage: 'Этап 1 · Вопрос 8', question: 'Как вы относитесь к коммерциализации Пасхи — шоколадные кролики, распродажи? Это эволюция или выхолащивание?', options: ['🕊 Арам — естественная адаптация культуры', '✝️ Василий — смещение к потреблению убивает суть'], labels: ['А', 'Б'], type: 'debate' },
+    { id: 'e1q9', stage: 'Этап 1 · Вопрос 9', question: 'Можно ли говорить о «пасхальном опыте» вне религии — как о переживании кризиса, обновления? Каков источник этого опыта?', options: ['🕊 Арам — универсальный психологический процесс', '✝️ Василий — истинное обновление связано со Христом'], labels: ['А', 'Б'], type: 'debate' },
+    { id: 'e1q10', stage: 'Этап 1 · Вопрос 10', question: 'Сохранились бы пасхальные традиции так же мощно, если бы исчезла вера в Воскресение? Что останется через сто лет?', options: ['🕊 Арам — останется культурная память', '✝️ Василий — без веры останется только форма, сила исчезнет'], labels: ['А', 'Б'], type: 'debate' },
+    { id: 'e1q11', stage: 'Этап 1 · Вопрос 11', question: 'Представьте: исчезли все атрибуты — церкви, куличи, «Христос воскрес». Останется ли Пасха? Что именно?', options: ['🕊 Арам — останется любовь и семейное единство', '✝️ Василий — останется факт Воскресения, «Он воскрес»'], labels: ['А', 'Б'], type: 'debate' },
+    { id: 'e1q12', stage: 'Этап 1 · Вопрос 12', question: 'Почему вообще праздновать Пасху, если не веришь в Воскресение?', options: ['🕊 Арам — культура важнее убеждений, традиция объединяет', '✝️ Василий — без веры это противоречие, формальность'], labels: ['А', 'Б'], type: 'debate' },
+    { id: 'e1q13', stage: 'Этап 1 · Вопрос 13', question: 'Что важнее: испечь кулич или поверить, что Христос воскрес?', options: ['🕊 Арам — кулич — это конкретный жест любви здесь и сейчас', '✝️ Василий — без истины это просто еда'], labels: ['А', 'Б'], type: 'debate' },
+    { id: 'e1q14', stage: 'Этап 1 · Вопрос 14', question: '«Христос воскрес» — это приветствие или исповедание веры?', options: ['🕊 Арам — культурное приветствие, форма участия', '✝️ Василий — исповедание веры, «устами исповедовать — спасёшься»'], labels: ['А', 'Б'], type: 'debate' },
+    { id: 'e1q15', stage: 'Этап 1 · Вопрос 15', question: 'Если убрать Воскресение, останется ли что-то уникальное в христианстве?', options: ['🕊 Арам — остаётся этика, культура, гуманизм', '✝️ Василий — «мы несчастнее всех человеков», всё рушится'], labels: ['А', 'Б'], type: 'debate' },
+    { id: 'e1q16', stage: 'Этап 1 · Вопрос 16', question: 'Если Воскресение — исторический факт, почему в него верят не все?', options: ['🕊 Арам — доказательства неоднозначны, допускают разные интерпретации', '✝️ Василий — проблема не в фактах, а в выборе человека'], labels: ['А', 'Б'], type: 'debate' },
+    { id: 'e1q17', stage: 'Этап 1 · Вопрос 17', question: 'Пасха — это день памяти или день победы?', options: ['🕊 Арам — день памяти о великом учителе', '✝️ Василий — «Я есмь воскресение и жизнь», день победы'], labels: ['А', 'Б'], type: 'debate' },
+    { id: 'e1q18', stage: 'Этап 1 · Вопрос 18', question: 'Может ли традиция существовать 2000 лет без реального ядра в центре?', options: ['🕊 Арам — да, люди сами создают и поддерживают смыслы', '✝️ Василий — без истины долго не живёт, основание необходимо'], labels: ['А', 'Б'], type: 'debate' },
+    { id: 'e1q19', stage: 'Этап 1 · Вопрос 19', question: 'Можно ли быть христианином и не верить в буквальное Воскресение?', options: ['🕊 Арам — да, как культурная идентичность и этика', '✝️ Василий — нет, 1 Кор. 15 прямо исключает такую позицию'], labels: ['А', 'Б'], type: 'debate' },
+    { id: 'e1q20', stage: 'Этап 1 · Вопрос 20', question: 'Пасха без Воскресения — это трагедия или просто другой праздник?', options: ['🕊 Арам — другой формат, более универсальный', '✝️ Василий — утрата истины, «истина сделает вас свободными»'], labels: ['А', 'Б'], type: 'debate' },
+    { id: 'e2q1', stage: 'Этап 2 · Утверждение 1', question: 'Иисус из Назарета — реальная историческая личность, упоминаемая не только в Библии, но и у римских историков (Тацит, Светоний)', options: ['✅ Исторический факт', '❌ Миф / Недоказано'], labels: ['Ф', 'М'], type: 'factfake', answer: 0, explain: 'Факт. Даже атеистические учёные признают историческое существование Иисуса.' },
+    { id: 'e2q2', stage: 'Этап 2 · Утверждение 2', question: 'Римские солдаты действительно запечатывали гробницы и ставили охрану для «опасных» преступников — стандартная процедура', options: ['✅ Исторический факт', '❌ Миф / Недоказано'], labels: ['Ф', 'М'], type: 'factfake', answer: 0, explain: 'Факт. Соответствует римскому военному уставу.' },
+    { id: 'e2q3', stage: 'Этап 2 · Утверждение 3', question: 'Ученики Иисуса украли тело, чтобы создать легенду о воскресении, и потом умерли счастливыми обманщиками', options: ['✅ Исторический факт', '❌ Миф / Недоказано'], labels: ['Ф', 'М'], type: 'factfake', answer: 1, explain: 'Фейк. Психологически невозможно, чтобы 11 человек пошли на мученическую смерть, зная, что лгут.' },
+    { id: 'e2q4', stage: 'Этап 2 · Утверждение 4', question: 'Иисус Христос после воскресения явился сначала Марии Магдалине, у которой ранее изгнал семь бесов', options: ['✅ Исторический факт', '❌ Миф / Недоказано'], labels: ['Ф', 'М'], type: 'factfake', answer: 0, explain: 'Факт. Подтверждается несколькими авторами Евангелий.' },
+    { id: 'e2q5', stage: 'Этап 2 · Утверждение 5', question: 'Иисус Христос воскрес духовно, а не физически. Его тело осталось в гробнице', options: ['✅ Исторический факт', '❌ Миф / Недоказано'], labels: ['Ф', 'М'], type: 'factfake', answer: 1, explain: 'Фейк. Фома вкладывал пальцы в раны — с призраком это было бы невозможно.' },
+    { id: 'e2q6', stage: 'Этап 2 · Утверждение 6', question: 'Христос не умер на кресте, а впал в кому. Выжил благодаря холодной пещере и травам, после ушёл в Кашмир', options: ['✅ Исторический факт', '❌ Миф / Недоказано'], labels: ['Ф', 'М'], type: 'factfake', answer: 1, explain: 'Фейк. Медицински и исторически невозможно. Римские центурионы были профессионалами в казнях.' },
+    { id: 'e2q7', stage: 'Этап 2 · Утверждение 7', question: 'Тело Христа украли садовник или хозяин гробницы', options: ['✅ Исторический факт', '❌ Миф / Недоказано'], labels: ['Ф', 'М'], type: 'factfake', answer: 1, explain: 'Фейк. Если бы тело украл садовник, он бы сознался или убежал, но не притворялся бы воскресшим Богом.' },
+    { id: 'e2q8', stage: 'Этап 2 · Утверждение 8', question: 'Иаков, брат Иисуса, во время земного служения не верил в Него. После Воскресения стал лидером церкви и принял мученическую смерть', options: ['✅ Исторический факт', '❌ Миф / Недоказано'], labels: ['Ф', 'М'], type: 'factfake', answer: 0, explain: 'Факт. Павел упоминает явление Христа Иакову (1 Кор. 15:7).' },
+    { id: 'e2q9', stage: 'Этап 2 · Утверждение 9', question: 'Ученики были так травмированы смертью Учителя, что мозг «сгенерировал» групповые видения воскресшего Иисуса', options: ['✅ Исторический факт', '❌ Миф / Недоказано'], labels: ['Ф', 'М'], type: 'factfake', answer: 1, explain: 'Фейк. Групповых галлюцинаций с одинаковыми деталями в медицине не зафиксировано.' },
+    { id: 'e2q10', stage: 'Этап 2 · Утверждение 10', question: 'Около 90% учёных признают шесть «минимальных фактов» о смерти и воскресении Христа', options: ['✅ Исторический факт', '❌ Миф / Недоказано'], labels: ['Ф', 'М'], type: 'factfake', answer: 0, explain: 'Факт. Профессор Гэри Хабермас проанализировал ~4500 научных публикаций — около 90% признают эти факты.' },
+    { id: 'e4q1', stage: 'Этап 4 · Вопрос 1', question: 'Пасха — это про Бога или про людей?', options: ['🙏 Про Бога', '👨‍👩‍👧 Про людей'], labels: ['Б', 'Л'], type: 'final' },
+    { id: 'e4q2', stage: 'Этап 4 · Вопрос 2', question: 'Если Христос не воскрес, Пасху стоит отменить?', options: ['✅ Да', '❌ Нет'], labels: ['Д', 'Н'], type: 'final' },
+    { id: 'e4q3', stage: 'Этап 4 · Вопрос 3', question: 'Можно быть христианином и не верить в воскресение?', options: ['✅ Да', '❌ Нет'], labels: ['Д', 'Н'], type: 'final' },
+    { id: 'e4q4', stage: 'Этап 4 · Вопрос 4', question: '«Христос воскрес» для вас — приветствие или исповедание веры?', options: ['👋 Приветствие', '✝️ Исповедание веры'], labels: ['П', 'И'], type: 'final' },
+    { id: 'e4q5', stage: 'Этап 4 · Вопрос 5', question: 'Без церкви Пасха останется?', options: ['✅ Да', '❌ Нет'], labels: ['Д', 'Н'], type: 'final' },
+    { id: 'e4q6', stage: 'Этап 4 · Вопрос 6', question: 'Без семьи Пасха останется?', options: ['✅ Да', '❌ Нет'], labels: ['Д', 'Н'], type: 'final' },
+    { id: 'e4q7', stage: 'Этап 4 · Вопрос 7', question: 'Шоколадный кролик портит Пасху?', options: ['✅ Да, портит', '❌ Нет, нормально'], labels: ['Д', 'Н'], type: 'final' },
+    { id: 'e4q8', stage: 'Этап 4 · Вопрос 8', question: 'Вы бы праздновали Пасху, если бы все вокруг перестали?', options: ['✅ Да', '❌ Нет'], labels: ['Д', 'Н'], type: 'final' },
+    { id: 'e4q9', stage: 'Этап 4 · Вопрос 9', question: 'Традиция красить яйца важнее богословия?', options: ['✅ Да', '❌ Нет'], labels: ['Д', 'Н'], type: 'final' },
+    { id: 'e4q10', stage: 'Этап 4 · Вопрос 10', question: 'Апостолы умерли за ложь?', options: ['✅ Да', '❌ Нет'], labels: ['Д', 'Н'], type: 'final' },
+    { id: 'e4q11', stage: 'Этап 4 · Вопрос 11', question: 'Если бы тело Христа нашли, вы бы стали атеистом?', options: ['✅ Да', '❌ Нет'], labels: ['Д', 'Н'], type: 'final' },
+    { id: 'e4q12', stage: 'Этап 4 · Вопрос 12', question: 'Через 100 лет Пасха останется?', options: ['✅ Да', '❌ Нет'], labels: ['Д', 'Н'], type: 'final' }
+  ];
+
+  // Firebase state
+  let adminState = { activePollId: null, isOpen: false };
+  let currentVotes = {};
+
+  // ===== SCREENS =====
+  window.showScreen = function(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  };
+
+  window.showAdmin = async function() {
+    window.showScreen('admin');
+    await loadAdminState();
+    renderPolls();
+    startLiveRefresh();
+  };
+
+  window.showVoter = function() {
+    window.showScreen('voter');
+    renderVoter();
+  };
+
+  // ===== ADMIN =====
+  const SECTIONS = [
+    { label: '🎤 Этап 1 — Дебаты (20 вопросов)', type: 'debate', color: '#C9A84C' },
+    { label: '🔍 Этап 2 — Факт / Фейк (10 утверждений)', type: 'factfake', color: '#5B8DB8' },
+    { label: '🗳 Этап 4 — Финальные вопросы (12 вопросов)', type: 'final', color: '#9B6BB5' }
+  ];
+
+  async function loadAdminState() {
+    const snap = await get(ref(db, 'adminState'));
+    if (snap.exists()) {
+      adminState = snap.val();
+    }
   }
-}
 
-let state = loadState();
-
-// Инициализируем голоса для всех опросов
-POLLS.forEach(p => {
-  if (!state.votes[p.id]) {
-    state.votes[p.id] = new Array(p.options.length).fill(0);
+  async function saveAdminState() {
+    await set(ref(db, 'adminState'), adminState);
   }
-});
 
-// ===== SCREENS =====
-window.showScreen = function(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-};
+  function renderPolls() {
+    const list = document.getElementById('polls-list');
+    list.innerHTML = '';
+    SECTIONS.forEach(section => {
+      const sectionPolls = POLLS.filter(p => p.type === section.type);
+      const header = document.createElement('div');
+      header.style.cssText = `grid-column:1/-1;border-top:1px solid ${section.color}55;padding-top:0.8rem;margin-top:0.6rem`;
+      header.innerHTML = `<div style="font-size:0.78rem;font-weight:600;color:${section.color};text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.6rem">${section.label}</div>`;
+      list.appendChild(header);
+      sectionPolls.forEach(poll => {
+        const isActive = poll.id === adminState.activePollId;
+        const card = document.createElement('div');
+        card.className = 'poll-card';
+        if (isActive) card.style.borderColor = section.color;
+        const preview = poll.options.map((o,i)=>`<span style="color:${section.color};font-weight:600">${poll.labels[i]})</span> ${o.substring(0,50)}${o.length>50?'…':''}`).join('<br>');
+        const votes = currentVotes[poll.id] || [];
+        const total = votes.reduce((a,b)=>a+b, 0);
+        card.innerHTML = `
+          <div class="stage" style="color:${section.color}">${poll.stage}</div>
+          <h3>${poll.question}</h3>
+          <div class="options-preview" style="margin-top:0.4rem">${preview}</div>
+          <div class="ctrl-row">
+            <button class="btn btn-small" style="background:${section.color};color:var(--deep);font-family:'Crimson Pro',serif;font-weight:600;cursor:pointer;border:none;border-radius:3px;text-transform:uppercase;letter-spacing:0.05em" onclick="window.activatePoll('${poll.id}')">
+              ${isActive ? (adminState.isOpen ? '⏹ Закрыть' : '▶ Открыть') : '▶ Запустить'}
+            </button>
+            ${isActive ? `<button class="btn btn-outline btn-small" onclick="window.resetPoll('${poll.id}')">🔄</button>` : ''}
+            <span style="color:var(--muted);font-size:0.8rem">${total} голосов</span>
+          </div>
+        `;
+        list.appendChild(card);
+      });
+    });
+  }
 
-window.showAdmin = function() {
-  window.showScreen('admin');
-  window.renderPolls();
-  window.startLiveRefresh();
-};
+  window.activatePoll = async function(id) {
+    if (adminState.activePollId === id) {
+      adminState.isOpen = !adminState.isOpen;
+    } else {
+      adminState.activePollId = id;
+      adminState.isOpen = true;
+      // Init votes in Firebase
+      const poll = POLLS.find(p=>p.id===id);
+      const initVotes = {};
+      poll.options.forEach((_, i) => { initVotes[i] = 0; });
+      await set(ref(db, 'votes/' + id), initVotes);
+      renderQR(id);
+    }
+    await saveAdminState();
+    updateStatusBadge();
+    renderPolls();
+    renderLive();
+  };
 
-window.showVoter = function() {
-  window.showScreen('voter');
-  window.renderVoter();
-};
+  window.resetPoll = async function(id) {
+    const poll = POLLS.find(p=>p.id===id);
+    const initVotes = {};
+    poll.options.forEach((_, i) => { initVotes[i] = 0; });
+    await set(ref(db, 'votes/' + id), initVotes);
+    renderPolls();
+    renderLive();
+  };
 
-// ===== ADMIN =====
-const SECTIONS = [
-  { label: '🎤 Этап 1 — Дебаты (20 вопросов)', type: 'debate', color: '#C9A84C' },
-  { label: '🔍 Этап 2 — Факт / Фейк (10 утверждений)', type: 'factfake', color: '#5B8DB8' },
-  { label: '🗳 Этап 4 — Финальные вопросы (12 вопросов)', type: 'final', color: '#9B6BB5' }
-];
+  function updateStatusBadge() {
+    const badge = document.getElementById('active-status');
+    if (adminState.activePollId && adminState.isOpen) {
+      const poll = POLLS.find(p=>p.id===adminState.activePollId);
+      badge.textContent = '● Открыто: ' + poll.stage;
+      badge.className = 'status-badge status-open';
+    } else if (adminState.activePollId && !adminState.isOpen) {
+      badge.textContent = '⏸ Закрыто';
+      badge.className = 'status-badge status-closed';
+    } else {
+      badge.textContent = 'Нет активного опроса';
+      badge.className = 'status-badge status-closed';
+    }
+  }
 
-window.renderPolls = function() {
-  const list = document.getElementById('polls-list');
-  list.innerHTML = '';
-  SECTIONS.forEach(section => {
-    const sectionPolls = POLLS.filter(p => p.type === section.type);
-    const header = document.createElement('div');
-    header.style.cssText = `grid-column:1/-1;border-top:1px solid ${section.color}55;padding-top:0.8rem;margin-top:0.6rem`;
-    header.innerHTML = `<div style="font-size:0.78rem;font-weight:600;color:${section.color};text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.6rem">${section.label}</div>`;
-    list.appendChild(header);
-    sectionPolls.forEach(poll => {
-      const isActive = poll.id === state.activePollId;
-      const card = document.createElement('div');
-      card.className = 'poll-card' + (isActive ? ' active-poll' : '');
-      if (isActive) card.style.borderColor = section.color;
-      const preview = poll.options.map((o,i)=>`<span style="color:${section.color};font-weight:600">${poll.labels[i]})</span> ${o.substring(0,50)}${o.length>50?'…':''}`).join('<br>');
-      card.innerHTML = `
-        <div class="stage" style="color:${section.color}">${poll.stage}</div>
-        <h3>${poll.question}</h3>
-        <div class="options-preview" style="margin-top:0.4rem">${preview}</div>
-        <div class="ctrl-row">
-          <button class="btn btn-small" style="background:${section.color};color:var(--deep);font-family:'Crimson Pro',serif;font-weight:600;cursor:pointer;border:none;border-radius:3px;text-transform:uppercase;letter-spacing:0.05em" onclick="window.activatePoll('${poll.id}')">
-            ${isActive ? (state.isOpen ? '⏹ Закрыть' : '▶ Открыть') : '▶ Запустить'}
-          </button>
-          ${isActive ? `<button class="btn btn-outline btn-small" onclick="window.resetPoll('${poll.id}')">🔄</button>` : ''}
-          <span style="color:var(--muted);font-size:0.8rem">${window.totalVotes(poll.id)} голосов</span>
+  function renderQR(pollId) {
+    const container = document.getElementById('qr-container');
+    const url = window.location.href.split('?')[0] + '?vote=1&poll=' + pollId;
+    container.innerHTML = `
+      <div style="font-size:0.75rem;color:#888;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.8rem">QR для участников</div>
+      <div id="qrcode"></div>
+      <div class="qr-url">${url}</div>
+      <div style="font-size:0.8rem;color:#888;margin-top:0.5rem;font-style:italic">Участники сканируют этот QR своим телефоном</div>
+    `;
+    new QRCode(document.getElementById('qrcode'), {
+      text: url, width: 180, height: 180,
+      colorDark: '#1A1208', colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.M
+    });
+  }
+
+  function renderLive() {
+    const view = document.getElementById('live-view');
+    if (!adminState.activePollId) { view.innerHTML = ''; return; }
+    const poll = POLLS.find(p=>p.id===adminState.activePollId);
+    const votes = currentVotes[poll.id] || [];
+    const total = votes.reduce((a,b)=>a+b, 0);
+    const rows = poll.options.map((opt, i) => {
+      const count = votes[i] || 0;
+      const pct = total > 0 ? Math.round(count/total*100) : 0;
+      return `
+        <div class="result-row">
+          <div class="result-label">
+            <span>${poll.labels[i]}) ${opt.substring(0,55)}${opt.length>55?'…':''}</span>
+            <span>${pct}%</span>
+          </div>
+          <div class="result-bar-bg">
+            <div class="result-bar" style="width:${pct}%"></div>
+          </div>
         </div>
       `;
-      list.appendChild(card);
-    });
-  });
-};
-
-window.activatePoll = function(id) {
-  if (state.activePollId === id) {
-    // Переключаем открыт/закрыт
-    state.isOpen = !state.isOpen;
-  } else {
-    // Выбираем новый опрос
-    state.activePollId = id;
-    state.isOpen = true;
-    window.renderQR(id);
-  }
-  saveState();
-  window.updateStatusBadge();
-  window.renderPolls();
-  window.renderLive();
-};
-
-window.resetPoll = function(id) {
-  state.votes[id] = new Array(POLLS.find(p=>p.id===id).options.length).fill(0);
-  saveState();
-  window.renderPolls();
-  window.renderLive();
-};
-
-window.totalVotes = function(id) {
-  return (state.votes[id] || []).reduce((a,b)=>a+b, 0);
-};
-
-window.updateStatusBadge = function() {
-  const badge = document.getElementById('active-status');
-  if (state.activePollId && state.isOpen) {
-    const poll = POLLS.find(p=>p.id===state.activePollId);
-    badge.textContent = '● Открыто: ' + poll.stage;
-    badge.className = 'status-badge status-open';
-  } else if (state.activePollId && !state.isOpen) {
-    badge.textContent = '⏸ Закрыто';
-    badge.className = 'status-badge status-closed';
-  } else {
-    badge.textContent = 'Нет активного опроса';
-    badge.className = 'status-badge status-closed';
-  }
-};
-
-window.renderQR = function(pollId) {
-  const container = document.getElementById('qr-container');
-  // Добавляем ID опроса в URL
-  const url = window.location.href.split('?')[0] + '?vote=1&poll=' + pollId;
-  container.innerHTML = `
-    <div style="font-size:0.75rem;color:#888;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.8rem">QR для участников</div>
-    <div id="qrcode"></div>
-    <div class="qr-url">${url}</div>
-    <div style="font-size:0.8rem;color:#888;margin-top:0.5rem;font-style:italic">Участники сканируют этот QR своим телефоном</div>
-  `;
-  new QRCode(document.getElementById('qrcode'), {
-    text: url,
-    width: 180,
-    height: 180,
-    colorDark: '#1A1208',
-    colorLight: '#ffffff',
-    correctLevel: QRCode.CorrectLevel.M
-  });
-};
-
-window.renderLive = function() {
-  const view = document.getElementById('live-view');
-  if (!state.activePollId) { view.innerHTML = ''; return; }
-  const poll = POLLS.find(p=>p.id===state.activePollId);
-  const total = window.totalVotes(poll.id);
-  const rows = poll.options.map((opt, i) => {
-    const count = state.votes[poll.id][i] || 0;
-    const pct = total > 0 ? Math.round(count/total*100) : 0;
-    return `
-      <div class="result-row">
-        <div class="result-label">
-          <span>${poll.labels[i]}) ${opt.substring(0,55)}${opt.length>55?'…':''}</span>
-          <span>${pct}%</span>
-        </div>
-        <div class="result-bar-bg">
-          <div class="result-bar" style="width:${pct}%"></div>
-        </div>
+    }).join('');
+    view.innerHTML = `
+      <div class="live-panel">
+        <h3>📊 Результаты в реальном времени</h3>
+        ${rows}
+        <div class="vote-count">Проголосовало: <strong>${total}</strong> человек</div>
       </div>
     `;
-  }).join('');
+  }
 
-  view.innerHTML = `
-    <div class="live-panel">
-      <h3>📊 Результаты в реальном времени</h3>
-      ${rows}
-      <div class="vote-count">Проголосовало: <strong>${total}</strong> человек</div>
-    </div>
-  `;
-};
+  let liveInterval = null;
+  function startLiveRefresh() {
+    // Listen for votes changes
+    onValue(ref(db, 'votes'), (snap) => {
+      currentVotes = snap.val() || {};
+      renderLive();
+      renderPolls();
+    });
+    
+    // Refresh admin state periodically
+    if (liveInterval) clearInterval(liveInterval);
+    liveInterval = setInterval(async () => {
+      await loadAdminState();
+      updateStatusBadge();
+      renderPolls();
+      renderQR(adminState.activePollId);
+    }, 2000);
+  }
 
-let liveInterval = null;
-window.startLiveRefresh = function() {
-  if (liveInterval) return;
-  liveInterval = setInterval(() => { 
-    // Обновляем состояние из localStorage (админ)
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      state.activePollId = parsed.activePollId;
-      state.isOpen = parsed.isOpen;
-      state.votes = parsed.votes;
+  // ===== VOTER =====
+  let selectedOpt = null;
+
+  function renderVoter() {
+    const card = document.getElementById('voter-card');
+    const params = new URLSearchParams(window.location.search);
+    const urlPollId = params.get('poll');
+    
+    if (!urlPollId) {
+      card.innerHTML = `<div class="egg-icon">🥚</div><div class="no-poll">Голосование пока не открыто.<br>Ожидайте команды ведущего.</div>`;
+      return;
     }
     
-    window.renderLive(); 
-    window.renderPolls(); 
-    window.updateStatusBadge(); 
-  }, 1000);
-};
+    const poll = POLLS.find(p=>p.id===urlPollId);
+    if (!poll) {
+      card.innerHTML = `<div class="egg-icon">🥚</div><div class="no-poll">Опрос не найден.<br>Пожалуйста, проверьте ссылку.</div>`;
+      return;
+    }
+    
+    const voterKey = 'voted_' + urlPollId;
+    if (localStorage.getItem(voterKey) === 'true') {
+      card.innerHTML = `<div class="voted-message"><div class="big-check">✅</div><h3>Ваш голос учтён!</h3><p>Спасибо за участие в дебатах</p></div>`;
+      return;
+    }
 
-// ===== VOTER =====
-window.renderVoter = function() {
-  const card = document.getElementById('voter-card');
-  
-  // Получаем ID опроса из URL
-  const params = new URLSearchParams(window.location.search);
-  const urlPollId = params.get('poll');
-  
-  // Если нет ID опроса в URL, показываем сообщение
-  if (!urlPollId) {
+    if (card.querySelector('.vote-option') && selectedOpt !== null) return;
+
+    const colors = poll.type === 'debate' ? ['#C9A84C', '#6B2737'] : 
+                   poll.type === 'factfake' ? ['#5B8DB8', '#B85B5B'] : ['#7A7A7A', '#7A7A7A'];
+
+    const opts = poll.options.map((opt, i) => `
+      <button class="vote-option" onclick="window.selectOpt(${i})">
+        <span class="opt-letter" style="background:${colors[i]}">${poll.labels[i]}</span>
+        <span>${opt}</span>
+      </button>
+    `).join('');
+
+    const icon = poll.type === 'debate' ? '🎤' : poll.type === 'factfake' ? '🔍' : '🗳';
+
     card.innerHTML = `
-      <div class="egg-icon">🥚</div>
-      <div class="no-poll">Голосование пока не открыто.<br>Ожидайте команды ведущего.</div>
+      <div class="egg-icon">${icon}</div>
+      <div class="poll-stage">${poll.stage}</div>
+      <h2>${poll.question}</h2>
+      ${opts}
+      <button class="btn-vote" id="submit-vote" disabled onclick="window.submitVote()">Проголосовать</button>
     `;
-    return;
-  }
-  
-  // Проверяем, существует ли такой опрос
-  const poll = POLLS.find(p=>p.id===urlPollId);
-  if (!poll) {
-    card.innerHTML = `
-      <div class="egg-icon">🥚</div>
-      <div class="no-poll">Опрос не найден.<br>Пожалуйста, проверьте ссылку.</div>
-    `;
-    return;
-  }
-  
-  // Проверяем, голосовал ли уже этот пользователь
-  const voterKey = 'voted_' + urlPollId;
-  if (localStorage.getItem(voterKey) === 'true') {
-    card.innerHTML = `
-      <div class="voted-message">
-        <div class="big-check">✅</div>
-        <h3>Ваш голос учтён!</h3>
-        <p>Спасибо за участие в дебатах</p>
-      </div>
-    `;
-    return;
+    selectedOpt = null;
   }
 
-  // НЕ перерисовываем, если уже отображается голосование и выбран вариант
-  if (card.querySelector('.vote-option') && selectedOpt !== null) {
-    return;
-  }
+  window.selectOpt = function(i) {
+    selectedOpt = i;
+    document.querySelectorAll('.vote-option').forEach((el, idx) => {
+      el.classList.toggle('selected', idx === i);
+    });
+    const submitBtn = document.getElementById('submit-vote');
+    if (submitBtn) submitBtn.disabled = false;
+  };
 
-  const colors = poll.type === 'debate' ? ['#C9A84C', '#6B2737'] :
-                 poll.type === 'factfake' ? ['#5B8DB8', '#B85B5B'] :
-                 ['#7A7A7A', '#7A7A7A'];
+  window.submitVote = async function() {
+    if (selectedOpt === null) return;
+    
+    const params = new URLSearchParams(window.location.search);
+    const urlPollId = params.get('poll');
+    if (!urlPollId) return;
+    
+    const poll = POLLS.find(p=>p.id===urlPollId);
+    if (!poll) return;
+    
+    // Increment vote in Firebase
+    const voteRef = ref(db, 'votes/' + urlPollId + '/' + selectedOpt);
+    await update(voteRef, { '.sv': { 'increment': 1 } });
+    
+    localStorage.setItem('voted_' + urlPollId, 'true');
+    selectedOpt = null;
+    renderVoter();
+    showToast('Голос принят! ✨');
+  };
 
-  const opts = poll.options.map((opt, i) => `
-    <button class="vote-option" id="opt-${i}" onclick="window.selectOpt(${i})">
-      <span class="opt-letter" style="background:${colors[i]}">${poll.labels[i]}</span>
-      <span>${opt}</span>
-    </button>
-  `).join('');
+  window.showToast = function(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  };
 
-  const icon = poll.type === 'debate' ? '🎤' : poll.type === 'factfake' ? '🔍' : '🗳';
+  // Expose to window
+  window.activatePoll = activatePoll;
+  window.resetPoll = resetPoll;
+  window.selectOpt = selectOpt;
+  window.submitVote = submitVote;
 
-  card.innerHTML = `
-    <div class="egg-icon">${icon}</div>
-    <div class="poll-stage">${poll.stage}</div>
-    <h2>${poll.question}</h2>
-    ${opts}
-    <button class="btn-vote" id="submit-vote" disabled onclick="window.submitVote()">Проголосовать</button>
-  `;
-  selectedOpt = null;
-};
-
-let selectedOpt = null;
-window.selectOpt = function(i) {
-  selectedOpt = i;
-  document.querySelectorAll('.vote-option').forEach((el, idx) => {
-    el.classList.toggle('selected', idx === i);
-  });
-  const submitBtn = document.getElementById('submit-vote');
-  if (submitBtn) {
-    submitBtn.disabled = false;
-  }
-};
-
-window.submitVote = function() {
-  if (selectedOpt === null) return;
-  
-  // Получаем ID опроса из URL
-  const params = new URLSearchParams(window.location.search);
-  const urlPollId = params.get('poll');
-  
-  if (!urlPollId) return;
-  
-  const poll = POLLS.find(p=>p.id===urlPollId);
-  if (!poll) return;
-  
-  // Загружаем актуальное состояние голосов
-  const saved = localStorage.getItem(STORAGE_KEY);
-  if (saved) {
-    try {
-      const parsed = JSON.parse(saved);
-      if (parsed.votes && parsed.votes[urlPollId]) {
-        state.votes = parsed.votes;
-      }
-    } catch(e) {}
-  }
-  
-  // Инициализируем массив голосов если нужно
-  if (!state.votes[urlPollId]) {
-    state.votes[urlPollId] = new Array(poll.options.length).fill(0);
-  }
-  
-  // Добавляем голос
-  state.votes[urlPollId][selectedOpt]++;
-  
-  // Отмечаем, что пользователь проголосовал
-  const voterKey = 'voted_' + urlPollId;
-  localStorage.setItem(voterKey, 'true');
-  
-  // Сохраняем состояние
-  saveState();
-  
-  selectedOpt = null;
-  window.renderVoter();
-  window.showToast('Голос принят! ✨');
-};
-
-// ===== URL ROUTING =====
-window.init = function() {
+  // Init
   const params = new URLSearchParams(window.location.search);
   if (params.get('vote') === '1') {
-    // Показываем страницу голосования с конкретным опросом из URL
     window.showVoter();
-    // Обновляем страницу голосования каждые 2 секунды, но только если пользователь уже проголосовал
-    setInterval(() => {
-      const voterKey = 'voted_' + params.get('poll');
-      if (localStorage.getItem(voterKey) === 'true' || !document.querySelector('.vote-option')) {
-        window.renderVoter();
-      }
-    }, 2000);
+    setInterval(renderVoter, 2000);
   }
-};
-
-// ===== TOAST =====
-window.showToast = function(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
-};
-
-// ===== URL ROUTING =====
-window.init = function() {
-  const params = new URLSearchParams(window.location.search);
-  if (params.get('vote') === '1') {
-    // Показываем страницу голосования с конкретным опросом из URL
-    window.showVoter();
-    // Обновляем страницу голосования каждые 2 секунды
-    setInterval(() => {
-      window.renderVoter();
-    }, 2000);
-  }
-};
-
-window.init();
 </script>
 </body>
 </html>
