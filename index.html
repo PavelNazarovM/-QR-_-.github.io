@@ -1003,6 +1003,11 @@ window.renderVoter = function() {
     return;
   }
 
+  // НЕ перерисовываем, если уже отображается голосование и выбран вариант
+  if (card.querySelector('.vote-option') && selectedOpt !== null) {
+    return;
+  }
+
   const colors = poll.type === 'debate' ? ['#C9A84C', '#6B2737'] :
                  poll.type === 'factfake' ? ['#5B8DB8', '#B85B5B'] :
                  ['#7A7A7A', '#7A7A7A'];
@@ -1023,7 +1028,7 @@ window.renderVoter = function() {
     ${opts}
     <button class="btn-vote" id="submit-vote" disabled onclick="window.submitVote()">Проголосовать</button>
   `;
-  card._selected = null;
+  selectedOpt = null;
 };
 
 let selectedOpt = null;
@@ -1032,7 +1037,10 @@ window.selectOpt = function(i) {
   document.querySelectorAll('.vote-option').forEach((el, idx) => {
     el.classList.toggle('selected', idx === i);
   });
-  document.getElementById('submit-vote').disabled = false;
+  const submitBtn = document.getElementById('submit-vote');
+  if (submitBtn) {
+    submitBtn.disabled = false;
+  }
 };
 
 window.submitVote = function() {
@@ -1076,6 +1084,22 @@ window.submitVote = function() {
   selectedOpt = null;
   window.renderVoter();
   window.showToast('Голос принят! ✨');
+};
+
+// ===== URL ROUTING =====
+window.init = function() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('vote') === '1') {
+    // Показываем страницу голосования с конкретным опросом из URL
+    window.showVoter();
+    // Обновляем страницу голосования каждые 2 секунды, но только если пользователь уже проголосовал
+    setInterval(() => {
+      const voterKey = 'voted_' + params.get('poll');
+      if (localStorage.getItem(voterKey) === 'true' || !document.querySelector('.vote-option')) {
+        window.renderVoter();
+      }
+    }, 2000);
+  }
 };
 
 // ===== TOAST =====
