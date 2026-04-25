@@ -749,7 +749,7 @@ const POLLS = [
   }
 ];
 
-// ===== STATE (синхронизируется через localStorage) =====
+// ===== STATE (сохраняется в localStorage для админа) =====
 const STORAGE_KEY = 'easter_polls_state';
 
 function loadState() {
@@ -789,7 +789,7 @@ function saveState() {
 
 let state = loadState();
 
-// Если голоса не инициализированы для каких-то опросов, инициализируем
+// Инициализируем голоса для всех опросов
 POLLS.forEach(p => {
   if (!state.votes[p.id]) {
     state.votes[p.id] = new Array(p.options.length).fill(0);
@@ -854,8 +854,10 @@ window.renderPolls = function() {
 
 window.activatePoll = function(id) {
   if (state.activePollId === id) {
+    // Переключаем открыт/закрыт
     state.isOpen = !state.isOpen;
   } else {
+    // Выбираем новый опрос
     state.activePollId = id;
     state.isOpen = true;
     window.renderQR(id);
@@ -868,7 +870,6 @@ window.activatePoll = function(id) {
 
 window.resetPoll = function(id) {
   state.votes[id] = new Array(POLLS.find(p=>p.id===id).options.length).fill(0);
-  state.voterVoted = {}; // Сбрасываем отметки о голосовании для этого опроса
   saveState();
   window.renderPolls();
   window.renderLive();
@@ -895,7 +896,8 @@ window.updateStatusBadge = function() {
 
 window.renderQR = function(pollId) {
   const container = document.getElementById('qr-container');
-  const url = window.location.href.split('?')[0] + '?vote=1';
+  // Добавляем ID опроса в URL
+  const url = window.location.href.split('?')[0] + '?vote=1&poll=' + pollId;
   container.innerHTML = `
     <div style="font-size:0.75rem;color:#888;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.8rem">QR для участников</div>
     <div id="qrcode"></div>
@@ -946,12 +948,14 @@ let liveInterval = null;
 window.startLiveRefresh = function() {
   if (liveInterval) return;
   liveInterval = setInterval(() => { 
-    // Перезагружаем состояние из localStorage
-    const newState = loadState();
-    state.activePollId = newState.activePollId;
-    state.isOpen = newState.isOpen;
-    state.votes = newState.votes;
-    state.voterVoted = newState.voterVoted;
+    // Обновляем состояние из localStorage (админ)
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      state.activePollId = parsed.activePollId;
+      state.isOpen = parsed.isOpen;
+      state.votes = parsed.votes;
+    }
     
     window.renderLive(); 
     window.renderPolls(); 
@@ -961,27 +965,33 @@ window.startLiveRefresh = function() {
 
 // ===== VOTER =====
 window.renderVoter = function() {
-  // Перезагружаем состояние
-  const newState = loadState();
-  state.activePollId = newState.activePollId;
-  state.isOpen = newState.isOpen;
-  state.votes = newState.votes;
-  state.voterVoted = newState.voterVoted;
-  
   const card = document.getElementById('voter-card');
   
-  if (!state.activePollId || !state.isOpen) {
+  // Получаем ID опроса из URL
+  const params = new URLSearchParams(window.location.search);
+  const urlPollId = params.get('poll');
+  
+  // Если нет ID опроса в URL, показываем сообщение
+  if (!urlPollId) {
     card.innerHTML = `
       <div class="egg-icon">🥚</div>
       <div class="no-poll">Голосование пока не открыто.<br>Ожидайте команды ведущего.</div>
     `;
     return;
   }
-
-  const poll = POLLS.find(p=>p.id===state.activePollId);
+  
+  // Проверяем, существует ли такой опрос
+  const poll = POLLS.find(p=>p.id===urlPollId);
+  if (!poll) {
+    card.innerHTML = `
+      <div class="egg-icon">🥚</div>
+      <div class="no-poll">Опрос не найден.<br>Пожалуйста, проверьте ссылку.</div>
+    `;
+    return;
+  }
   
   // Проверяем, голосовал ли уже этот пользователь
-  const voterKey = 'voted_' + state.activePollId;
+  const voterKey = 'voted_' + urlPollId;
   if (localStorage.getItem(voterKey) === 'true') {
     card.innerHTML = `
       <div class="voted-message">
@@ -1026,25 +1036,46 @@ window.selectOpt = function(i) {
 };
 
 window.submitVote = function() {
-  if (selectedOpt === null || !state.activePollId || !state.isOpen) return;
+  if (selectedOpt === null) return;
   
-  const poll = POLLS.find(p=>p.id===state.activePollId);
-  state.votes[poll.id][selectedOpt]++;
+  // Получаем ID опроса из URL
+  const params = new URLSearchParams(window.location.search);
+  const urlPollId = params.get('poll');
+  
+  if (!urlPollId) return;
+  
+  const poll = POLLS.find(p=>p.id===urlPollId);
+  if (!poll) return;
+  
+  // Загружаем актуальное состояние голосов
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) {
+    try {
+      const parsed = JSON.parse(saved);
+      if (parsed.votes && parsed.votes[urlPollId]) {
+        state.votes = parsed.votes;
+      }
+    } catch(e) {}
+  }
+  
+  // Инициализируем массив голосов если нужно
+  if (!state.votes[urlPollId]) {
+    state.votes[urlPollId] = new Array(poll.options.length).fill(0);
+  }
+  
+  // Добавляем голос
+  state.votes[urlPollId][selectedOpt]++;
   
   // Отмечаем, что пользователь проголосовал
-  const voterKey = 'voted_' + state.activePollId;
+  const voterKey = 'voted_' + urlPollId;
   localStorage.setItem(voterKey, 'true');
   
+  // Сохраняем состояние
   saveState();
   
   selectedOpt = null;
   window.renderVoter();
   window.showToast('Голос принят! ✨');
-  
-  // Автоматически обновляем страницу для голосующего
-  setTimeout(() => {
-    window.renderVoter();
-  }, 1000);
 };
 
 // ===== TOAST =====
@@ -1059,6 +1090,7 @@ window.showToast = function(msg) {
 window.init = function() {
   const params = new URLSearchParams(window.location.search);
   if (params.get('vote') === '1') {
+    // Показываем страницу голосования с конкретным опросом из URL
     window.showVoter();
     // Обновляем страницу голосования каждые 2 секунды
     setInterval(() => {
