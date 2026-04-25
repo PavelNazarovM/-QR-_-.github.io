@@ -749,16 +749,52 @@ const POLLS = [
   }
 ];
 
-// ===== STATE =====
-let state = {
-  activePollId: null,
-  isOpen: false,
-  votes: {},
-  voterVoted: {}
-};
+// ===== STATE (синхронизируется через localStorage) =====
+const STORAGE_KEY = 'easter_polls_state';
 
-// Init votes
-POLLS.forEach(p => { state.votes[p.id] = new Array(p.options.length).fill(0); });
+function loadState() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      return {
+        activePollId: parsed.activePollId || null,
+        isOpen: parsed.isOpen || false,
+        votes: parsed.votes || {},
+        voterVoted: parsed.voterVoted || {}
+      };
+    }
+  } catch(e) {
+    console.error('Failed to load state:', e);
+  }
+  
+  const defaultState = {
+    activePollId: null,
+    isOpen: false,
+    votes: {},
+    voterVoted: {}
+  };
+  
+  POLLS.forEach(p => { defaultState.votes[p.id] = new Array(p.options.length).fill(0); });
+  return defaultState;
+}
+
+function saveState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch(e) {
+    console.error('Failed to save state:', e);
+  }
+}
+
+let state = loadState();
+
+// Если голоса не инициализированы для каких-то опросов, инициализируем
+POLLS.forEach(p => {
+  if (!state.votes[p.id]) {
+    state.votes[p.id] = new Array(p.options.length).fill(0);
+  }
+});
 
 // ===== SCREENS =====
 window.showScreen = function(id) {
@@ -775,7 +811,6 @@ window.showAdmin = function() {
 window.showVoter = function() {
   window.showScreen('voter');
   window.renderVoter();
-  setInterval(window.renderVoter, 2000);
 };
 
 // ===== ADMIN =====
@@ -825,6 +860,7 @@ window.activatePoll = function(id) {
     state.isOpen = true;
     window.renderQR(id);
   }
+  saveState();
   window.updateStatusBadge();
   window.renderPolls();
   window.renderLive();
@@ -832,6 +868,8 @@ window.activatePoll = function(id) {
 
 window.resetPoll = function(id) {
   state.votes[id] = new Array(POLLS.find(p=>p.id===id).options.length).fill(0);
+  state.voterVoted = {}; // Сбрасываем отметки о голосовании для этого опроса
+  saveState();
   window.renderPolls();
   window.renderLive();
 };
@@ -907,11 +945,29 @@ window.renderLive = function() {
 let liveInterval = null;
 window.startLiveRefresh = function() {
   if (liveInterval) return;
-  liveInterval = setInterval(() => { window.renderLive(); window.renderPolls(); window.updateStatusBadge(); }, 1000);
+  liveInterval = setInterval(() => { 
+    // Перезагружаем состояние из localStorage
+    const newState = loadState();
+    state.activePollId = newState.activePollId;
+    state.isOpen = newState.isOpen;
+    state.votes = newState.votes;
+    state.voterVoted = newState.voterVoted;
+    
+    window.renderLive(); 
+    window.renderPolls(); 
+    window.updateStatusBadge(); 
+  }, 1000);
 };
 
 // ===== VOTER =====
 window.renderVoter = function() {
+  // Перезагружаем состояние
+  const newState = loadState();
+  state.activePollId = newState.activePollId;
+  state.isOpen = newState.isOpen;
+  state.votes = newState.votes;
+  state.voterVoted = newState.voterVoted;
+  
   const card = document.getElementById('voter-card');
   
   if (!state.activePollId || !state.isOpen) {
@@ -924,7 +980,9 @@ window.renderVoter = function() {
 
   const poll = POLLS.find(p=>p.id===state.activePollId);
   
-  if (state.voterVoted[poll.id]) {
+  // Проверяем, голосовал ли уже этот пользователь
+  const voterKey = 'voted_' + state.activePollId;
+  if (localStorage.getItem(voterKey) === 'true') {
     card.innerHTML = `
       <div class="voted-message">
         <div class="big-check">✅</div>
@@ -969,12 +1027,24 @@ window.selectOpt = function(i) {
 
 window.submitVote = function() {
   if (selectedOpt === null || !state.activePollId || !state.isOpen) return;
+  
   const poll = POLLS.find(p=>p.id===state.activePollId);
   state.votes[poll.id][selectedOpt]++;
-  state.voterVoted[poll.id] = true;
+  
+  // Отмечаем, что пользователь проголосовал
+  const voterKey = 'voted_' + state.activePollId;
+  localStorage.setItem(voterKey, 'true');
+  
+  saveState();
+  
   selectedOpt = null;
   window.renderVoter();
   window.showToast('Голос принят! ✨');
+  
+  // Автоматически обновляем страницу для голосующего
+  setTimeout(() => {
+    window.renderVoter();
+  }, 1000);
 };
 
 // ===== TOAST =====
@@ -990,6 +1060,10 @@ window.init = function() {
   const params = new URLSearchParams(window.location.search);
   if (params.get('vote') === '1') {
     window.showVoter();
+    // Обновляем страницу голосования каждые 2 секунды
+    setInterval(() => {
+      window.renderVoter();
+    }, 2000);
   }
 };
 
