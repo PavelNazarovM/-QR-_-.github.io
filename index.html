@@ -525,9 +525,26 @@ function startVoter() {
   const urlPollId = params.get('poll');
 
   if (urlPollId) {
-    // Прямая ссылка на конкретный опрос
-    voterPollId = urlPollId;
-    renderVoterPoll(urlPollId);
+    // Прямая ссылка — проверяем, открыт ли опрос
+    get(ref(db, 'adminState')).then(snap => {
+      const state = snap.val() || {};
+      const poll = POLLS.find(p => p.id === urlPollId);
+      
+      if (state.activePollId === urlPollId && state.isOpen && poll) {
+        voterPollId = urlPollId;
+        selectedOpt = null;
+        renderVoterPoll(urlPollId);
+      } else {
+        document.getElementById('voter-card').innerHTML = `
+          <div class="egg-icon">🚫</div>
+          <div class="no-poll">
+            ${poll ? 'Этот опрос закрыт или не активен.' : 'Опрос не найден.'}<br>
+            Обратитесь к ведущему.
+          </div>`;
+      }
+    }).catch(() => {
+      document.getElementById('voter-card').innerHTML = '<div class="no-poll">Ошибка загрузки. Попробуйте позже.</div>';
+    });
   } else {
     // Слушаем adminState — показываем текущий открытый опрос
     if (voterUnsubscribe) voterUnsubscribe();
@@ -547,7 +564,6 @@ function startVoter() {
     });
   }
 }
-
 function renderVoterPoll(pollId) {
   const card = document.getElementById('voter-card');
   const poll = POLLS.find(p=>p.id===pollId);
